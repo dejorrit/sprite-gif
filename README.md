@@ -1,6 +1,6 @@
 # Sprite Gif
 
-## demo
+## Demo
 
 👉 [Check out the demo ](https://dejorrit.github.io/sprite-gif/demo/)
 
