@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <title>SpriteGif Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  
+  <style>
+    .container {
+      max-width: 600px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-family: 'arial', sans-serif;
+      font-size: 30px;
+      line-height: 1.5;
+    }
+    
+    p {
+      font-family: 'arial', sans-serif;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+    
+    .my-gif {
+      display: block;
+      width: 320px;
+      height: 240px;
+      background-color: #ddd;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>
+    SpriteGif Demo
+  </h1>
+  
+  <p>
+    <span class="my-gif js-my-gif"></span>
+  </p>
+  
+  <p>
+    <button class="js-play">
+      play
+    </button>
+    
+    <button class="js-pause">
+      pause
+    </button>
+    
+    <button class="js-stop">
+      stop
+    </button>
+    
+    <input type="number" value="1" class="js-speed"/>
+</div>
+
+<script type="module" src="./demo.js"></script>
+</body>
+</html>
