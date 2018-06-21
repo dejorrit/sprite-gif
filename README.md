@@ -1,5 +1,9 @@
 # Sprite Gif
 
+## demo
+
+👉 [Check out the demo ](https://dejorrit.github.io/sprite-gif/demo/)
+
 ## Usage
 
 ```javascript
