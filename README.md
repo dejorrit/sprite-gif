@@ -9,9 +9,19 @@
 Use a service like [ezgif.com](https://ezgif.com/gif-to-sprite) to create
 a sprite from your gif. Make sure you select "Stack horizontally".
 
+#### Install the package
+
+```bash
+yarn add sprite-gif
+```
+
+#### Your HTML
+
 ```html
 <div id="myGif" width="320" height="280"></div>
 ```
+
+#### Your Javascript
 
 ```javascript
 import SpriteGif from 'sprite-gif';
