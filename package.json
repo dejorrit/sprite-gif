@@ -14,7 +14,7 @@
     "pause gif"
   ],
   "files": [
-    "src/"
+    "dist/"
   ],
   "scripts": {
     "build": "webpack --mode production"
