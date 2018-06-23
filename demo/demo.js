@@ -13,6 +13,6 @@ let mySprite = new SpriteGif(myGif, {
 playButton.addEventListener('click',  () => mySprite.play());
 pauseButton.addEventListener('click', () => mySprite.pause());
 stopButton.addEventListener('click',  () => mySprite.stop());
-speedInput.addEventListener('change', (event) => {
+speedInput.addEventListener('input', (event) => {
   mySprite.setSpeed(parseFloat(event.target.value));
 });

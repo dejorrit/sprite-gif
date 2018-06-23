@@ -3,31 +3,27 @@
 <head>
   <title>SpriteGif Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   
   <style>
     .container {
-      max-width: 600px;
+      max-width: 320px;
       padding: 20px;
       margin: 0 auto;
     }
     
-    h1 {
-      font-family: 'arial', sans-serif;
-      font-size: 30px;
-      line-height: 1.5;
-    }
-    
-    p {
-      font-family: 'arial', sans-serif;
-      font-size: 17px;
-      line-height: 1.5;
-    }
-    
     .my-gif {
       display: block;
-      width: 320px;
-      height: 240px;
+      width: 280px;
+      height: 210px;
       background-color: #ddd;
+    }
+    
+    .controls {
+      width: 280px;
+      text-align: center;
     }
   </style>
 </head>
@@ -35,28 +31,37 @@
 <body>
 
 <div class="container">
-  <h1>
+  <h4>
     SpriteGif Demo
-  </h1>
+  </h4>
   
   <p>
     <span class="my-gif js-my-gif"></span>
   </p>
   
-  <p>
-    <button class="js-play">
-      play
-    </button>
+  <div class="controls">
+    <p>
+      <button class="js-play mdl-button mdl-button--raised mdl-button--colored">
+        play
+      </button>
+      
+      <button class="js-pause mdl-button mdl-button--raised mdl-button--colored">
+        pause
+      </button>
+      
+      <button class="js-stop mdl-button mdl-button--raised mdl-button--colored">
+        stop
+      </button>
+    </p>
     
-    <button class="js-pause">
-      pause
-    </button>
+    <p>
+      <strong>speed</strong>
+    </p>
     
-    <button class="js-stop">
-      stop
-    </button>
-    
-    <input type="number" value="1" class="js-speed"/>
+    <p>
+      <input type="range" min=".1" max="10" step=".1" value="1" class="js-speed mdl-slider mdl-js-slider"/>
+    </p>
+  </div>
 </div>
 
 <script type="module" src="./demo.js"></script>
