@@ -1,4 +1,4 @@
-import SpriteGif from './../dist/sprite-gif.js';
+import SpriteGif from './../src/sprite-gif.js';
 
 let myGif       = document.querySelector('.js-my-gif');
 let playButton  = document.querySelector('.js-play');
