@@ -32,23 +32,23 @@ gif.setFrameRate(30);
 
 You can add some optional settings to the settings object:
 
-### `autostart` (Boolean)
+#### `autostart` (Boolean)
 default: `true`
 
-### `loop` (Boolean)
+#### `loop` (Boolean)
 default: `true`
 
-### `speed` (Number)
+#### `speed` (Number)
 default: `1`
 
-### `frameRate` (Number)
+#### `frameRate` (Number)
 default: `30`
 
 ## Methods
 
-### `play()`
-### `pause()`
-### `stop()`
-### `setLoop(false)`
-### `setSpeed(2)`
-### `setFrameRate(40)`
+#### `play()`
+#### `pause()`
+#### `stop()`
+#### `setLoop(false)`
+#### `setSpeed(2)`
+#### `setFrameRate(40)`
