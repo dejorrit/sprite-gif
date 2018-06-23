@@ -1,3 +1,5 @@
+"use strict"; 
+
 const defaults = {
   autostart: true,
   frameRate: 30,
@@ -5,7 +7,7 @@ const defaults = {
   speed:     1,
 }
 
-export default class SpriteGif {
+class SpriteGif {
   
   constructor(element, settings) {
     this.el       = element;
@@ -177,3 +179,5 @@ export default class SpriteGif {
   }
   
 }
+
+module.exports = SpriteGif;
