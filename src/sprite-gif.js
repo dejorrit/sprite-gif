@@ -117,17 +117,18 @@ export default class SpriteGif {
   }
   
   _animate(timestamp) {
-    if (!this.lastFrameTime) {
-      this.lastFrameTime = timestamp;
+    if (!this.lastAnimationStepTimestamp) {
+      this.animationTime = 0;
+    } else {
+      this.animationTime = this.animationTime + (timestamp - this.lastAnimationStepTimestamp)
     }
     
-    let timePerFrame   = 1000 / (this.settings.frameRate * this.settings.speed);
-    let sinceLastFrame = timestamp - this.lastFrameTime;
+    this.lastAnimationStepTimestamp = timestamp;
     
-    if (sinceLastFrame > timePerFrame) {
-      this.lastFrameTime = timestamp;
-      this._renderFrame(this.currentFrame + Math.round(sinceLastFrame / timePerFrame));
-    }
+    let timePerFrame = 1000 / (this.settings.frameRate * this.settings.speed);
+    let nextFrame    = Math.round(this.animationTime / timePerFrame);
+
+    this._renderFrame(nextFrame);
     
     if (this.currentFrame >= this.frames) {
       this._onEnd();
@@ -137,6 +138,9 @@ export default class SpriteGif {
   }
   
   _onEnd() {
+    this.animationTime = 0;
+    this.lastAnimationStepTimestamp = 0;
+    
     if (this.settings.loop) {
       this._renderFrame(1);
       this._requestAF();
