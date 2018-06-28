@@ -17,9 +17,6 @@ export default class SpriteGif {
     
     this.isPlaying = false;
     
-    this.width  = this._getWidth();
-    this.height = this._getHeight();
-    
     this._animate        = this._animate.bind(this);
     this._onSpriteLoaded = this._onSpriteLoaded.bind(this);
     
@@ -36,7 +33,7 @@ export default class SpriteGif {
     this.isPlaying = true;
     
     if (this.currentFrame === this.frames) {
-      this._renderFrame(0);
+      this._renderFrame(1);
     }
     
     this._resetLastFrameTime();
@@ -54,7 +51,7 @@ export default class SpriteGif {
   
   stop() {
     this._stopAtEnd();
-    this._renderFrame(0);
+    this._renderFrame(1);
   }
   
   setLoop(loop) {
@@ -81,6 +78,10 @@ export default class SpriteGif {
     this.settings.frameRate;
   }
   
+  renderFrame(frame) {
+    this._renderFrame(frame);
+  }
+  
   _loadSprite() {
     return new Promise((resolve, reject) => {
       let sprite = new Image();
@@ -96,10 +97,14 @@ export default class SpriteGif {
   }
   
   _onSpriteLoaded(sprite) {
-    let scale = this.height / sprite.naturalHeight;
-    this.frames = (sprite.naturalWidth * scale) / this.width;
+    let scale = this._getHeight() / sprite.naturalHeight;
+    this.frames = Math.round((sprite.naturalWidth * scale) / this._getWidth());
     this._insertSprite();
-    this._renderFrame(0);
+    this._renderFrame(1);
+    
+    if (this.settings.onLoaded && typeof this.settings.onLoaded === 'function') {
+      this.settings.onLoaded();
+    }
     
     if (this.settings.autostart) {
       this.play();
@@ -108,7 +113,7 @@ export default class SpriteGif {
   
   _insertSprite() {
     this.el.style.backgroundImage = `url('${this.settings.sprite}')`;
-    this.el.style.backgroundSize  = `auto 100%`;
+    this.el.style.backgroundSize  = `${(this.frames * 100)}% auto`;
   }
   
   _animate(timestamp) {
@@ -133,7 +138,7 @@ export default class SpriteGif {
   
   _onEnd() {
     if (this.settings.loop) {
-      this._renderFrame(0);
+      this._renderFrame(1);
       this._requestAF();
     } else {
       this._stopAtEnd();
@@ -158,8 +163,9 @@ export default class SpriteGif {
   
   _renderFrame(frame) {
     frame = Math.min(frame, this.frames);
+    let percentage = ((frame - 1) / (this.frames - 1)) * 100;
     
-    this.el.style.backgroundPositionX = `-${(frame * this.width)}px`;
+    this.el.style.backgroundPositionX = `${percentage}%`;
     this.el.style.backgroundPositionY = '0px';
     this.currentFrame = frame;
   }
