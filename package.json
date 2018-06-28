@@ -1,6 +1,6 @@
 {
   "name": "sprite-gif",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Play, pause, loop and control the speed of gifs using sprites",
   "main": "dist/sprite-gif.js",
   "repository": "git@github.com:dejorrit/sprite-gif.git",
