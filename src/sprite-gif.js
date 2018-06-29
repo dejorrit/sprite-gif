@@ -26,27 +26,18 @@ export default class SpriteGif {
   }
   
   play() {
-    if (this.isPlaying) {
-      return;
+    if (!this.isPlaying) {
+      this.isPlaying = true;
+      this._requestAF();
     }
-    
-    this.isPlaying = true;
-    
-    if (this.currentFrame === this.frames) {
-      this._renderFrame(1);
-    }
-    
-    this._resetLastFrameTime();
-    this._requestAF();
   }
   
   pause() {
-    if (!this.isPlaying) {
-        return;
+    if (this.isPlaying) {
+      this.lastStepTimestamp = null;
+      this.isPlaying = false;
+      this._cancelAF();
     }
-    
-    this.isPlaying = false;
-    this._cancelAF();
   }
   
   stop() {
@@ -58,7 +49,7 @@ export default class SpriteGif {
     if (typeof loop !== 'boolean') {
         throw new Error('loop setting not of type Boolean');
     }
-    
+  
     this.settings.loop = loop;
   }
   
@@ -66,7 +57,7 @@ export default class SpriteGif {
     if (typeof speed !== 'number') {
       throw new Error('speed setting not of type number');
     }
-    
+  
     this.settings.speed = speed;
   }
   
@@ -74,7 +65,7 @@ export default class SpriteGif {
     if (typeof frameRate !== 'number') {
       throw new Error('frameRate not of type number');
     }
-    
+  
     this.settings.frameRate;
   }
   
@@ -117,41 +108,38 @@ export default class SpriteGif {
   }
   
   _animate(timestamp) {
-    if (!this.lastAnimationStepTimestamp) {
-      this.animationTime = 0;
-    } else {
-      this.animationTime = this.animationTime + (timestamp - this.lastAnimationStepTimestamp)
-    }
-    
-    this.lastAnimationStepTimestamp = timestamp;
-    
     let timePerFrame = 1000 / (this.settings.frameRate * this.settings.speed);
-    let nextFrame    = Math.round(this.animationTime / timePerFrame);
-
-    this._renderFrame(nextFrame);
+    let timeSinceLastStep = timestamp - (this.lastStepTimestamp ? this.lastStepTimestamp : timestamp);
+    let animatingTime     = (this.animatingTime ? this.animatingTime : 0) + timeSinceLastStep;
+    let nextFrame         = Math.round(animatingTime / timePerFrame) + 1;
     
-    if (this.currentFrame >= this.frames) {
+    this.lastStepTimestamp = timestamp;
+    this.animatingTime     = animatingTime;
+    
+    if (nextFrame > this.frames) {
       this._onEnd();
     } else {
+      this._renderFrame(nextFrame);
       this._requestAF();
     }
   }
   
   _onEnd() {
-    this.animationTime = 0;
-    this.lastAnimationStepTimestamp = 0;
+    this.animatingTime     = null;
+    this.lastStepTimestamp = null;
     
     if (this.settings.loop) {
       this._renderFrame(1);
       this._requestAF();
     } else {
+      window.console.log('onEnd', 'stop');
       this._stopAtEnd();
     }
   }
   
   _stopAtEnd() {
     this.isPlaying = false;
-    this._resetLastFrameTime();
+    this._resetTimers();
     this._cancelAF();
   }
   
@@ -167,14 +155,17 @@ export default class SpriteGif {
   
   _renderFrame(frame) {
     frame = Math.min(frame, this.frames);
-    let percentage = ((frame - 1) / (this.frames - 1)) * 100;
     
-    this.el.style.backgroundPositionX = `${percentage}%`;
-    this.el.style.backgroundPositionY = '0px';
-    this.currentFrame = frame;
+    if (frame !== this.currentFrame) {
+      let percentage = ((frame - 1) / (this.frames - 1)) * 100;
+      
+      this.el.style.backgroundPositionX = `${percentage}%`;
+      this.el.style.backgroundPositionY = '0px';
+      this.currentFrame = frame;
+    }
   }
   
-  _resetLastFrameTime() {
+  _resetTimers() {
     this.lastFrameTime = null;
   }
   
