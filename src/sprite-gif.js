@@ -132,7 +132,6 @@ export default class SpriteGif {
       this._renderFrame(1);
       this._requestAF();
     } else {
-      window.console.log('onEnd', 'stop');
       this._stopAtEnd();
     }
   }
