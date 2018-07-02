@@ -156,9 +156,7 @@ export default class SpriteGif {
     frame = Math.min(frame, this.frames);
     
     if (frame !== this.currentFrame) {
-      let percentage = ((frame - 1) / (this.frames - 1)) * 100;
-      
-      this.el.style.backgroundPositionX = `${percentage}%`;
+      this.el.style.backgroundPositionX = `-${(frame - 1)}00%`;
       this.el.style.backgroundPositionY = '0px';
       this.currentFrame = frame;
     }
